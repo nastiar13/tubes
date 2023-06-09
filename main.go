@@ -294,7 +294,7 @@ func add_matches(league *League) {
 
 func reset_match(league *League) {
 	var weeks []string
-	for i := 0; i < league.n_matches-10; i += 10 {
+	for i := 0; i <= league.n_matches-10; i += 10 {
 		m := league.matches
 		if m[i].status || m[i+1].status || m[i+2].status || m[i+3].status || m[i+4].status || m[i+5].status || m[i+6].status || m[i+7].status || m[i+8].status || m[i+9].status {
 			weeks = append(weeks, "Week "+strconv.Itoa(i/10+1))
@@ -354,7 +354,7 @@ func reset_match(league *League) {
 
 func edit_match(league *League) {
 	var weeks []string
-	for i := 0; i < league.n_matches-10; i += 10 {
+	for i := 0; i <= league.n_matches-10; i += 10 {
 		m := league.matches
 		if m[i].status || m[i+1].status || m[i+2].status || m[i+3].status || m[i+4].status || m[i+5].status || m[i+6].status || m[i+7].status || m[i+8].status || m[i+9].status {
 			weeks = append(weeks, "Week "+strconv.Itoa(i/10+1))
@@ -433,7 +433,6 @@ func generateMatches(clubs Clubs) Matches {
 	numTeams := len(teams)
 	numWeeks := (numTeams - 1)
 	matchesPerWeek := numTeams / 2
-	fmt.Println(numTeams, numWeeks, matchesPerWeek)
 
 	for week := 0; week < numWeeks; week++ {
 
@@ -514,12 +513,8 @@ func menu(league *League, clubs Clubs) {
 
 func main() {
 	var epl League
-	var mu, mci, ars, newc Club
 	var clubs Clubs
-	mu.name = "Man United FC"
-	mci.name = "Man City FC"
-	ars.name = "Arsenal FC"
-	newc.name = "Newcastle FC"
+
 	var list_clubs = []string{"ARS", "AVL", "BRE", "BHA", "BUR", "CHE", "CRY", "EVE", "LEE", "LEI", "LIV", "MCI", "MUN", "NEW", "NOR", "SOU", "TOT", "WAT", "WHU", "WOL"}
 	for i := 0; i < len(list_clubs); i++ {
 		var club Club
@@ -527,16 +522,11 @@ func main() {
 		clubs[i] = club
 
 	}
-	// var clubs = Clubs{ars, mci, mu, newc}
 
 	setup_league(clubs, &epl)
 	matches := generateMatches(epl.classement)
 	epl.matches = matches
 	epl.n_matches = len(matches)
-
-	// for i := 0; i < epl.n_matches; i++ {
-	// 	fmt.Println(epl.matches[i])
-	// }
 
 	menu(&epl, clubs)
 
